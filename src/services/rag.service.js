@@ -1,5 +1,4 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { embeddings } from '../services/embeddings.js';
 import { createWeaviateRetriever } from '../services/vectorstore/weaviate.js';
 
 const llm = new ChatOpenAI({
@@ -8,19 +7,17 @@ const llm = new ChatOpenAI({
 });
 
 export async function ask(question) {
-   // Truyền embeddings vào hàm tạo retriever
-   const retriever = await createWeaviateRetriever(embeddings);
+   const retriever = await createWeaviateRetriever();
 
    // Sau đó thực hiện tìm kiếm tài liệu
    const docs = await retriever.invoke(question);
    
    // Logic để gửi sang LLM (gpt-4o-mini, Llama3 (miễn phí), ...)
    const context = docs.map(d => d.pageContent).join("\n");
-   console.log("context: ", context);
    
    const res = await llm.invoke([
-     { role: "system", content: "Chỉ trả lời dựa trên context." },
-     { role: "user", content: `Context:\n${context}\n\nQuestion:\n${question}` }
+     { role: "system", content: 'Chỉ trả lời câu hỏi dựa trên tài liệu được cung cấp. Nếu không có thông tin trong tài liệu, hãy trả lời "Tôi chưa tìm thấy thông tin nào để trả lời cho câu hỏi của bạn. Mong bạn thông cảm!"' },
+     { role: "user", content: `Tài liệu:\n${context}\n\nCâu hỏi:\n${question}` }
    ]);
 
    return res.content;
