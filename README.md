@@ -46,3 +46,7 @@
 - Sử dụng Hybrid Search: Kết hợp dùng Vector Search (Embedding) với Keyword Search (BM25) trong Weaviate. Điều này giúp AI tìm đúng các thuật ngữ chuyên môn tâm lý mà đôi khi embedding bỏ lỡ.
 - Chunking (Cắt nhỏ tài liệu) thông minh: Thay vì cắt theo độ dài, hãy cắt theo "bước" hoặc "ý chính" trong lộ trình tư vấn. Đảm bảo mỗi đoạn vector hóa đều chứa đủ ngữ cảnh để AI không bị hiểu lầm.
 - Kiểm tra độ tương đồng (Similarity Threshold): Vì bạn yêu cầu "không có thông tin sẽ trả lời không biết", bạn cần thiết lập một ngưỡng (threshold) trong Weaviate (ví dụ: chỉ lấy kết quả có độ tương đồng > 0.7). Nếu không có kết quả nào đạt ngưỡng, bạn sẽ yêu cầu LLM báo "Không tìm thấy thông tin".
+
+====================== Phần Bảo mật ================
+curl http://localhost:8080/v1/meta \
+  -H "Authorization: Bearer rag-secret-key"

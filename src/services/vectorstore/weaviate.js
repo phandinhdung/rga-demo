@@ -1,13 +1,14 @@
 import { WeaviateStore } from "@langchain/weaviate";
-import { connectToLocal } from "weaviate-client";
+import weaviate from "weaviate-client";
 import { embeddings } from "../embeddings.js";
 import { WEAVIATE_INDEX_NAME } from "./constants.js";
 
 export async function createWeaviateRetriever() {
-  const client = await connectToLocal({
+  const client = await weaviate.connectToLocal({
     host: "localhost",
     port: 8080,
     grpcPort: 50051,
+    authCredentials: new weaviate.ApiKey(process.env.WEAVIATE_API_KEY),
   });
 
   const vectorStore = await WeaviateStore.fromExistingIndex(embeddings, {
