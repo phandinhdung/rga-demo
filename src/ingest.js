@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Document } from "@langchain/core/documents";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { WeaviateStore } from "@langchain/weaviate";
@@ -11,7 +12,7 @@ async function run() {
   try {
     console.log("🚀 Bắt đầu quá trình làm mới dữ liệu...");
 
-    // 1. Đọc file kiến thức
+    // Đọc file kiến thức
     const filePath = path.resolve("data/knowledge.txt");
     if (!fs.existsSync(filePath)) {
       throw new Error(`Không tìm thấy file tại: ${filePath}. Hãy tạo thư mục data và file knowledge.txt!`);
@@ -20,18 +21,21 @@ async function run() {
     const text = fs.readFileSync(filePath, "utf8");
     const docs = [new Document({ pageContent: text, metadata: { source: "knowledge.txt" } })];
 
-    // 2. Chia nhỏ văn bản
-    const splitter = new RecursiveCharacterTextSplitter({ chunkSize: 500, chunkOverlap: 50 });
+    // Chia nhỏ văn bản
+    const splitter = new RecursiveCharacterTextSplitter({ 
+      chunkSize: 1000, 
+      chunkOverlap: 150 
+    });
     const chunks = await splitter.splitDocuments(docs);
 
-    // 3. Kết nối Weaviate V3
+    // Kết nối Weaviate V3
     const client = await connectToLocal({
       host: "localhost",
       port: 8080,
       grpcPort: 50051,
     });
 
-    // --- BƯỚC MỚI: XÓA DỮ LIỆU CŨ ---
+    // --- XÓA DỮ LIỆU CŨ ---
     console.log(`🧹 Đang xóa toàn bộ dữ liệu cũ trong collection: ${WEAVIATE_INDEX_NAME}...`);
     try {
       // Kiểm tra xem collection có tồn tại không trước khi xóa

@@ -14,5 +14,8 @@ export async function createPineconeRetriever() {
     pineconeIndex: index
   });
 
-  return store.asRetriever({ k: 5 });
+  return store.asRetriever({ 
+    k: 7, // Lấy 7 đoạn văn bản liên quan nhất
+    searchType: "mmr", // kết quả đa dạng, tránh trùng lặp ý
+  });
 }
