@@ -1,9 +1,12 @@
 * Set up môi trường:
-+ Node v22.18.0
-+ Cài pnpm
-+ Cài Docker
-+ Cài Ollama (https://ollama.com/download), sau khi cài xong, vào cmd gõ "ollama --version" để kiểm tra đã cài thành công chưa.
-+ Chạy lệnh "ollama pull nomic-embed-text", để cài đặt mô hình nomic-embed-text (loại nhẹ, chỉ tốn ít tài nguyên bộ nhớ để chạy) dùng để chuyển đổi các câu văn hoặc đoạn văn thành một chuỗi các con số (vector). Để kiểm tra, đã cái được hay chưa, có thể chạy lệnh "ollama list" hoặc lệnh "ollama show nomic-embed-text"
+- Node v22.18.0
+- Cài pnpm
+- Cài Docker
+- Cài Ollama (https://ollama.com/download), sau khi cài xong, vào cmd gõ "ollama --version" để kiểm tra đã cài thành công chưa.
+- Chạy lệnh:
+  + "ollama pull nomic-embed-text" : modal bình thường, tốn ít bộ nhớ.
+  + Hoặc "ollama pull bge-m3" : modal tốt hơn, nhưng tốn nhiều bộ nhớ hơn.
+, để cài modal, dùng để chuyển đổi các câu văn hoặc đoạn văn thành một chuỗi các con số (vector). Để kiểm tra, đã cái được hay chưa, có thể chạy lệnh "ollama list" hoặc lệnh "ollama show nomic-embed-text" (hoặc "ollama show bge-m3")
 
 
 
@@ -12,7 +15,7 @@
 - Mở terminal, di chuyển vào thư mục dự án rg-demo
 - pnpm i : để cài các thư viện cần thiết cho project.
 - docker compose up -d : để chạy các server cần thiết trên docker
-- pnpm ingest : để tạo dữ liệu vetor và lưu vào weaviate DB. File dữ liệu được lưu ở data/knowledge.txt
+- pnpm ingest : để tạo dữ liệu vetor và lưu vào weaviate DB. File dữ liệu đầu vào được lưu ở data/knowledge.txt
 - pnpm dev : chạy server backend
 - Để test api /chat, có thể mở Postman, tạo request POST với link "http://localhost:3000/chat" , chọn tab Body, chọn raw, chọn JSON, nhập nội dung là 
 {
@@ -40,6 +43,6 @@
 - mxbai-embed-large: Có khả năng phân loại ngữ nghĩa rất sâu, dù là model tiếng Anh nhưng xử lý đa ngôn ngữ khá ổn định. (ollama pull mxbai-embed-large)
 
 * Cải tiến RAG: Trong lĩnh vực tư vấn, Lộ trình (Roadmap) là thứ đòi hỏi tính logic và thứ tự. Để hệ thống hoạt động hoàn hảo trên Weaviate, nên triển khai thêm các phần sau:
-- Sử dụng Hybrid Search: Đừng chỉ dùng Vector Search (Embedding). Hãy kết hợp với Keyword Search (BM25) trong Weaviate. Điều này giúp AI tìm đúng các thuật ngữ chuyên môn tâm lý mà đôi khi embedding bỏ lỡ.
+- Sử dụng Hybrid Search: Kết hợp dùng Vector Search (Embedding) với Keyword Search (BM25) trong Weaviate. Điều này giúp AI tìm đúng các thuật ngữ chuyên môn tâm lý mà đôi khi embedding bỏ lỡ.
 - Chunking (Cắt nhỏ tài liệu) thông minh: Thay vì cắt theo độ dài, hãy cắt theo "bước" hoặc "ý chính" trong lộ trình tư vấn. Đảm bảo mỗi đoạn vector hóa đều chứa đủ ngữ cảnh để AI không bị hiểu lầm.
 - Kiểm tra độ tương đồng (Similarity Threshold): Vì bạn yêu cầu "không có thông tin sẽ trả lời không biết", bạn cần thiết lập một ngưỡng (threshold) trong Weaviate (ví dụ: chỉ lấy kết quả có độ tương đồng > 0.7). Nếu không có kết quả nào đạt ngưỡng, bạn sẽ yêu cầu LLM báo "Không tìm thấy thông tin".
