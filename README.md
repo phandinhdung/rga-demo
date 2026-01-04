@@ -30,18 +30,18 @@
 \- Kiểm tra dữ liệu: Sau khi chạy xong, bạn có thể kiểm tra xem dữ liệu đã vào Weaviate chưa bằng cách truy cập: http://localhost:8080/v1/objects.<br/>
 \- Nếu bạn sửa file knowledge.txt, hãy chạy lại lệnh "pnpm ingest" để cập nhật kiến thức mới cho AI.<br/>
 
-=================================================================================<br/>
+===============================================================<br/>
 ============ TÀI LIỆU KIẾN THỨC CẦN BIẾT CHO RAG ==============<br/>
-1. RAG (Retrieval-Augmented Generation) là một kỹ thuật giúp mô hình ngôn ngữ lớn (LLM) như GPT-4 hay Gemini truy cập vào các nguồn dữ liệu bên ngoài để đưa ra câu trả lời chính xác, cập nhật và đáng tin cậy hơn.<br/>
+* RAG (Retrieval-Augmented Generation) là một kỹ thuật giúp mô hình ngôn ngữ lớn (LLM) như GPT-4 hay Gemini truy cập vào các nguồn dữ liệu bên ngoài để đưa ra câu trả lời chính xác, cập nhật và đáng tin cậy hơn.<br/>
 Thay vì chỉ dựa vào "trí nhớ" có sẵn từ quá trình huấn luyện, RAG cho phép AI "tra cứu" tài liệu của bạn trước khi trả lời.<br/>
 <br/>
-2. Tại sao cần dùng RAG?<br/>
+* Tại sao cần dùng RAG?<br/>
 Mặc dù các LLM rất thông minh, chúng vẫn gặp phải 3 vấn đề lớn mà RAG có thể giải quyết:<br/>
 \- Tránh "ảo giác" (Hallucination): LLM đôi khi tự tin đưa ra thông tin sai lệch. RAG buộc AI phải dựa trên dữ liệu thực tế được cung cấp để trả lời.<br/>
 \- Cập nhật dữ liệu thời gian thực: LLM bị giới hạn bởi "Knowledge Cutoff" (ngày cuối cùng nó được học dữ liệu). RAG giúp AI tiếp cận được các tin tức mới nhất hoặc dữ liệu nội bộ của doanh nghiệp mà không cần huấn luyện lại (re-training).<br/>
 \- Bảo mật và cá nhân hóa: Bạn có thể cho AI đọc các tài liệu riêng tư (hợp đồng, hướng dẫn sử dụng nội bộ) để hỗ trợ công việc mà không lo dữ liệu đó bị lộ ra ngoài hay dùng để huấn luyện mô hình chung.<br/>
 <br/>
-3. RAG liên quan gì đến Vector Database (Cơ sở dữ liệu Vector)?<br/>
+* RAG liên quan gì đến Vector Database (Cơ sở dữ liệu Vector)?<br/>
 \- Để RAG hoạt động hiệu quả, hệ thống cần tìm đúng đoạn văn bản chứa thông tin cần thiết trong hàng triệu trang tài liệu chỉ trong vài mil giây. Đây là lúc Vector DB xuất hiện.<br/>
 \- Mối quan hệ này hoạt động như sau:<br/>
 \+ Embedding: Toàn bộ dữ liệu của bạn được chia nhỏ và chuyển đổi thành các dãy số (gọi là vector) đại diện cho ý nghĩa ngữ nghĩa.<br/>
@@ -51,7 +51,7 @@ Mặc dù các LLM rất thông minh, chúng vẫn gặp phải 3 vấn đề l�
 <br/>
 Ví dụ dễ hiểu: Nếu RAG là một bài kiểm tra "sách mở", thì Vector DB chính là mục lục siêu thông minh giúp bạn lật đúng trang sách chứa câu trả lời ngay lập tức thay vì phải đọc lại cả cuốn sách.<br/>
 <br/>
-4. Quy trình vận hành của RAG<br/>
+* Quy trình vận hành của RAG<br/>
 \- Bước 1: Người dùng đặt câu hỏi.<br/>
 \- Bước 2: Hệ thống tìm kiếm thông tin liên quan đến câu hỏi trong Vector DB.<br/>
 \- Bước 3: Gộp thông tin tìm được + Câu hỏi gốc đưa vào LLM.<br/>
