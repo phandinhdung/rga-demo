@@ -1,17 +1,17 @@
-* Tóm tắt các tính năng đã làm:
-- Chuyển dữ liệu từ file ".txt" sang dạng vector và lưu vào DB Weaviate.
-- Dùng kỹ thuật RAG, để làm cho câu trả lời của AI chính xác hơn, do có dựa trên dữ liệu đầu vào ở trên. Nếu không tìm thấy thông tin trong dữ liệu đầu vào, AI sẽ trả lời không biết.
-- Tạo server backend (nodejs), với api "/chat", dùng để gửi câu hỏi cho AI, response trả về là câu trả lời của AI.
+# \* Tóm tắt các tính năng đã làm:
+## \- Chuyển dữ liệu từ file ".txt" sang dạng vector và lưu vào DB Weaviate.
+## \- Dùng kỹ thuật RAG, để làm cho câu trả lời của AI chính xác hơn, do có dựa trên dữ liệu đầu vào ở trên. Nếu không tìm thấy thông tin trong dữ liệu đầu vào, AI sẽ trả lời không biết.
+\- Tạo server backend (nodejs), với api "/chat", dùng để gửi câu hỏi cho AI, response trả về là câu trả lời của AI.
 
 
-* Set up môi trường:
-- Cài Node v22.18.0
-- Cài pnpm
-- Cài Docker
-- Cài Ollama (https://ollama.com/download), sau khi cài xong, vào cmd gõ "ollama --version" để kiểm tra đã cài thành công chưa.
-- Chạy lệnh:
-  + "ollama pull nomic-embed-text" : modal bình thường, tốn ít bộ nhớ.
-  + Hoặc "ollama pull bge-m3" : modal tốt hơn, nhưng tốn nhiều bộ nhớ hơn.
+\* Set up môi trường:
+\- Cài Node v22.18.0
+\- Cài pnpm
+\- Cài Docker
+\- Cài Ollama (https://ollama.com/download), sau khi cài xong, vào cmd gõ "ollama --version" để kiểm tra đã cài thành công chưa.
+\- Chạy lệnh:
+  \+ "ollama pull nomic-embed-text" : modal bình thường, tốn ít bộ nhớ.
+  \+ Hoặc "ollama pull bge-m3" : modal tốt hơn, nhưng tốn nhiều bộ nhớ hơn.
 , để cài modal, dùng để chuyển đổi các câu văn hoặc đoạn văn thành một chuỗi các con số (vector). Để kiểm tra, đã cái được hay chưa, có thể chạy lệnh "ollama list" hoặc lệnh "ollama show nomic-embed-text" (hoặc "ollama show bge-m3")
 
 
