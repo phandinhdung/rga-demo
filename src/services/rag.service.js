@@ -3,7 +3,8 @@ import { createWeaviateRetriever } from '../services/vectorstore/weaviate.js';
 
 const llm = new ChatOpenAI({
   model: "gpt-4o-mini",
-  temperature: 0.2
+  temperature: 0.2,
+  openAIApiKey: process.env.OPENAI_API_KEY
 });
 
 export async function ask(question) {
