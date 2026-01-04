@@ -1,6 +1,7 @@
 * Tóm tắt các tính năng đã làm:
 - Chuyển dữ liệu từ file ".txt" sang dạng vector và lưu vào DB Weaviate.
 - Dùng kỹ thuật RAG, để làm cho câu trả lời của AI chính xác hơn, do có dựa trên dữ liệu đầu vào ở trên. Nếu không tìm thấy thông tin trong dữ liệu đầu vào, AI sẽ trả lời không biết.
+- Tạo server backend (nodejs), với api "/chat", dùng để gửi câu hỏi cho AI, response trả về là câu trả lời của AI.
 
 
 * Set up môi trường:
