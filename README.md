@@ -61,7 +61,7 @@ Ví dụ dễ hiểu: Nếu RAG là một bài kiểm tra "sách mở", thì Vec
 =============TÀI LIỆU THÊM ============<br/>
 \* Phần Bảo mật<br/>
 \- Kiểm tra bảo mật của weaviate server bằng lệnh:
-curl http://localhost:8080/v1/meta \ -H "Authorization: Bearer WEAVIATE_API_KEY" <br/>
+curl http://localhost:8080/v1/meta -H "Authorization: Bearer WEAVIATE_API_KEY" <br />
 <br/>
 <br/>
 
