@@ -9,10 +9,7 @@
 \- Cài pnpm<br/>
 \- Cài Docker<br/>
 \- Cài Ollama (https://ollama.com/download), sau khi cài xong, vào cmd gõ "ollama --version" để kiểm tra đã cài thành công chưa.<br/>
-\- Chạy lệnh:<br/>
-  \+ "ollama pull nomic-embed-text" : modal bình thường, tốn ít bộ nhớ.<br/>
-  \+ Hoặc "ollama pull bge-m3" : modal tốt hơn, nhưng tốn nhiều bộ nhớ hơn.<br/>
-, để cài modal, dùng để chuyển đổi các câu văn hoặc đoạn văn thành một chuỗi các con số (vector). Để kiểm tra, đã cái được hay chưa, có thể chạy lệnh "ollama list" hoặc lệnh "ollama show nomic-embed-text" (hoặc "ollama show bge-m3")<br/>
+\- Chạy lệnh: "ollama pull bge-m3", để cài modal dùng để chuyển đổi các câu văn hoặc đoạn văn thành một chuỗi các con số (vector). Để kiểm tra, đã cài đặt thành công hay chưa, có thể chạy lệnh "ollama list" hoặc "ollama show bge-m3"<br/>
 <br/>
 <br/>
 \* Sau khi đã set up môi trường đầy đủ, vui lòng chạy các lệnh sau theo thứ tự:<br/>
@@ -61,16 +58,7 @@ Ví dụ dễ hiểu: Nếu RAG là một bài kiểm tra "sách mở", thì Vec
 \- Bước 4: LLM trả ra câu trả lời có độ chính xác cao.<br/>
 <br/>
 <br/>
-=============TÀI LIỆU ĐỌC THÊM ============<br/>
-\* Mặc dù nomic-embed-text rất mạnh về hiệu suất và hỗ trợ context dài (8192 tokens), nhưng nó được huấn luyện chủ yếu trên dữ liệu tiếng Anh. Đối với tiếng Việt, đặc biệt là trong tư vấn tâm lý — nơi một từ ngữ nhỏ cũng mang sắc thái khác nhau — bạn sẽ gặp một số hạn chế sau:<br/>
-\- Rào cản ngôn ngữ: Nomic hiểu tiếng Việt theo dạng "đa ngôn ngữ" (multilingual) nhưng không chuyên sâu. Nó có thể nhận diện từ khóa tốt, nhưng khả năng hiểu sự tương đồng về cảm xúc hoặc các ẩn ý trong câu văn tiếng Việt sẽ kém hơn các model chuyên dụng.<br/>
-\- Độ chính xác trong RAG: Trong tư vấn tâm lý, việc AI trả về "Tôi không biết" là rất quan trọng để tránh tư vấn sai. Nếu model embedding không "khớp" được câu hỏi của user với tài liệu do sai biệt về ngôn ngữ, AI sẽ thường xuyên trả lời "không biết" ngay cả khi tài liệu có thông tin, hoặc tệ hơn là lấy nhầm đoạn tài liệu không liên quan.<br/>
-<br/>
-\* Bổ sung các model khác có thể thay thế nomic-embed-text:<br/>
-\- BGE-M3 :Khuyên dùng nhất. Đây là model đa ngôn ngữ mạnh nhất hiện nay, hỗ trợ cực tốt cho tiếng Việt và các truy vấn dài/ngắn khác nhau. (ollama pull bge-m3)<br/>
-\- Paraphrase-multilingual: Chuyên biệt cho việc tìm kiếm các câu có cùng ý nghĩa nhưng khác cách diễn đạt (rất hợp với tâm lý học). (ollama pull paraphrase-multilingual)<br/>
-\- mxbai-embed-large: Có khả năng phân loại ngữ nghĩa rất sâu, dù là model tiếng Anh nhưng xử lý đa ngôn ngữ khá ổn định. (ollama pull mxbai-embed-large)<br/>
-<br/>
+=============TÀI LIỆU THÊM ============<br/>
 \* Phần Bảo mật<br/>
 \- Kiểm tra bảo mật của weaviate server bằng lệnh:
 curl http://localhost:8080/v1/meta \ -H "Authorization: Bearer WEAVIATE_API_KEY" <br/>
