@@ -12,6 +12,7 @@
     "@langchain/core": "^0.3.0",
     "@langchain/ollama": "^0.1.0",
     "@langchain/openai": "^0.2.5",
+    "@langchain/pinecone": "^1.0.1",
     "@langchain/textsplitters": "^1.0.1",
     "@langchain/weaviate": "^1.0.1",
     "@pinecone-database/pinecone": "^6.1.3",
