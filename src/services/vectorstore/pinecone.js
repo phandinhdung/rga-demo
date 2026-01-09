@@ -1,7 +1,8 @@
 import { Pinecone } from "@pinecone-database/pinecone";
 import { embeddings } from "../embeddings.js";
-import { PineconeVectorStore } from "@langchain/community/vectorstores/pinecone";
+// import { PineconeVectorStore } from "@langchain/community/vectorstores/pinecone";
 import { PINECONE_INDEX_NAME } from "./constants.js";
+import { PineconeStore } from "@langchain/pinecone";
 
 export async function createPineconeRetriever() {
   const pc = new Pinecone({
@@ -10,7 +11,7 @@ export async function createPineconeRetriever() {
 
   const index = pc.Index(PINECONE_INDEX_NAME);
 
-  const store = await PineconeVectorStore.fromExistingIndex(embeddings, {
+  const store = await PineconeStore.fromExistingIndex(embeddings, {
     pineconeIndex: index
   });
 

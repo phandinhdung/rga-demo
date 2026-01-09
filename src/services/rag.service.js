@@ -1,5 +1,6 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { createWeaviateRetriever } from '../services/vectorstore/weaviate.js';
+import { createPineconeRetriever } from '../services/vectorstore/pinecone.js';
 
 const llm = new ChatOpenAI({
   model: "gpt-4o-mini",
@@ -8,7 +9,8 @@ const llm = new ChatOpenAI({
 });
 
 export async function ask(question) {
-   const retriever = await createWeaviateRetriever();
+  //  const retriever = await createWeaviateRetriever();
+  const retriever = await createPineconeRetriever();
 
    // Sau đó thực hiện tìm kiếm tài liệu
    const docs = await retriever.invoke(question);
