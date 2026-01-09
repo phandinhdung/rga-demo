@@ -2,7 +2,8 @@ import "dotenv/config";
 import { Document } from "@langchain/core/documents";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { WeaviateStore } from "@langchain/weaviate";
-import { embeddings } from "./services/embeddings.js";
+// import { embeddings } from "./services/embeddings.js";
+import { OllamaEmbeddings } from "@langchain/ollama";
 import weaviate from "weaviate-client";  // Đảm bảo import đúng (bạn đã có rồi)
 import { WEAVIATE_INDEX_NAME } from "./services/vectorstore/constants.js";
 import fs from "node:fs";
@@ -12,18 +13,42 @@ async function run() {
   try {
     console.log("🚀 Bắt đầu quá trình làm mới dữ liệu...");
     
-    // Đọc file kiến thức
-    const filePath = path.resolve("data/knowledge.txt");
-    if (!fs.existsSync(filePath)) {
-      throw new Error(`Không tìm thấy file tại: ${filePath}. Hãy tạo thư mục data và file knowledge.txt!`);
+    // Đọc các file kiến thức
+    const docs = [];
+    
+    // Đọc file knowledge.txt
+    const knowledgePath = path.resolve("data/knowledge.txt");
+    if (fs.existsSync(knowledgePath)) {
+      const knowledgeText = fs.readFileSync(knowledgePath, "utf8");
+      if (knowledgeText.trim()) {
+        docs.push(new Document({ pageContent: knowledgeText, metadata: { source: "knowledge.txt" } }));
+        console.log("✅ Đã đọc file knowledge.txt");
+      } else {
+        console.warn("⚠️ File knowledge.txt trống, bỏ qua.");
+      }
+    } else {
+      console.warn(`⚠️ Không tìm thấy file tại: ${knowledgePath}`);
     }
-
-    const text = fs.readFileSync(filePath, "utf8");
-    if (!text.trim()) {
-      throw new Error("File knowledge.txt trống!");
+    
+    // Đọc file me.txt
+    const mePath = path.resolve("data/me.txt");
+    if (fs.existsSync(mePath)) {
+      const meText = fs.readFileSync(mePath, "utf8");
+      if (meText.trim()) {
+        docs.push(new Document({ pageContent: meText, metadata: { source: "me.txt" } }));
+        console.log("✅ Đã đọc file me.txt");
+      } else {
+        console.warn("⚠️ File me.txt trống, bỏ qua.");
+      }
+    } else {
+      console.warn(`⚠️ Không tìm thấy file tại: ${mePath}`);
     }
-
-    const docs = [new Document({ pageContent: text, metadata: { source: "knowledge.txt" } })];
+    
+    if (docs.length === 0) {
+      throw new Error("Không có file nào để nạp vào vector DB! Hãy kiểm tra lại các file trong thư mục data.");
+    }
+    
+    console.log(`📚 Tổng cộng đã đọc ${docs.length} file(s)`);
 
     const splitter = new RecursiveCharacterTextSplitter({
       chunkSize: 1000,
@@ -69,6 +94,11 @@ async function run() {
 
   // 4. Nạp dữ liệu mới
   console.log("🧠 Đang tạo vector và nạp lại từ đầu vào Weaviate...");
+  const embeddings = new OllamaEmbeddings({
+    model: process.env.EMBEDDING_MODEL_NAME,
+    baseUrl: process.env.OLLAMA_BASE_URL,
+  });
+  
   await WeaviateStore.fromDocuments(chunks, embeddings, {
     client,
     indexName: WEAVIATE_INDEX_NAME,
